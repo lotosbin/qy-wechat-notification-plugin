@@ -93,6 +93,10 @@ public class QyWechatNotification extends Publisher implements SimpleBuildStep {
         //设置当前项目名称
         if(run instanceof AbstractBuild){
             this.projectName = run.getParent().getFullDisplayName() ;
+        } 
+        else {
+            // Pipeline-Compatible
+            this.projectName = run.getParent().getFullDisplayName();
         }
 
         //构建结束通知
