@@ -35,6 +35,7 @@ public class BuildOverInfo {
      * 环境名称
      */
     private String topicName = "";
+    private String content = "";
 
     /**
      * 执行结果
@@ -63,8 +64,11 @@ public class BuildOverInfo {
         //工程名称
         this.projectName = projectName;
         //环境名称
-        if(config.topicName!=null){
+        if (config.topicName != null) {
             topicName = config.topicName;
+        }
+        if (config.content != null) {
+            this.content = config.content;
         }
         //结果
         result = run.getResult();
@@ -80,6 +84,9 @@ public class BuildOverInfo {
         content.append(" >构建用时：<font color=\"comment\">" +  this.useTimeString + "</font>\n");
         if(StringUtils.isNotEmpty(this.consoleUrl)) {
             content.append(" >[查看控制台](" + this.consoleUrl + ")");
+        }
+        if(StringUtils.isNotEmpty(this.content)){
+            content.append("\n" + this.content);
         }
 
         Map markdown = new HashMap<String, Object>();

@@ -63,6 +63,14 @@ public class DescriptorImpl extends BuildStepDescriptor<Publisher> {
         config.mentionedMobile = mentionedMobile;
     }
 
+    public void setContent(String content) {
+        config.content = content;
+    }
+
+    public String getContent() {
+        return config.content;
+    }
+
     public boolean isUseProxy() {
         return config.useProxy;
     }
@@ -122,6 +130,7 @@ public class DescriptorImpl extends BuildStepDescriptor<Publisher> {
         unsaveConfig.mentionedId = config.mentionedId;
         unsaveConfig.mentionedMobile = config.mentionedMobile;
         unsaveConfig.topicName = config.topicName;
+        unsaveConfig.content = config.content;
 
         unsaveConfig.useProxy = config.useProxy;
         unsaveConfig.proxyHost = config.proxyHost;
@@ -172,6 +181,7 @@ public class DescriptorImpl extends BuildStepDescriptor<Publisher> {
     public boolean configure(StaplerRequest req, JSONObject json) throws FormException {
         config.webhookUrl = json.getString("webhookUrl");
         config.topicName = json.getString("topicName");
+        config.content = json.getString("content");
         config.mentionedId = json.getString("mentionedId");
         config.mentionedMobile = json.getString("mentionedMobile");
         config.useProxy = json.get("useProxy")!=null;

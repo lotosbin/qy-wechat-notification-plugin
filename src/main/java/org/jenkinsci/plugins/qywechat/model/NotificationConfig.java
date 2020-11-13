@@ -24,7 +24,10 @@ public class NotificationConfig {
      * 主题名称
      */
     public String topicName = "";
-
+    /**
+     * 通知内容
+     */
+    public String content = "";
     /**
      * 使用代理
      */

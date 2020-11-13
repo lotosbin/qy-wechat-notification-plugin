@@ -22,11 +22,15 @@ import java.io.PrintStream;
 
 /**
  * 企业微信构建通知
+ *
  * @author jiaju
  */
 public class QyWechatNotification extends Publisher implements SimpleBuildStep {
 
+
     private String webhookUrl;
+
+    private String content;
 
     private String mentionedId;
 
@@ -93,7 +97,7 @@ public class QyWechatNotification extends Publisher implements SimpleBuildStep {
         //设置当前项目名称
         if(run instanceof AbstractBuild){
             this.projectName = run.getParent().getFullDisplayName() ;
-        } 
+        }
         else {
             // Pipeline-Compatible
             this.projectName = run.getParent().getFullDisplayName();
@@ -163,42 +167,53 @@ public class QyWechatNotification extends Publisher implements SimpleBuildStep {
 
     /**
      * 读取配置，将当前Job与全局配置整合
+     *
      * @param envVars
      * @return
      */
-    public NotificationConfig getConfig(EnvVars envVars){
+    public NotificationConfig getConfig(EnvVars envVars) {
         NotificationConfig config = DESCRIPTOR.getUnsaveConfig();
-        if(StringUtils.isNotEmpty(webhookUrl)){
+        if (StringUtils.isNotEmpty(webhookUrl)) {
             config.webhookUrl = webhookUrl;
         }
-        if(StringUtils.isNotEmpty(mentionedId)){
+        if (StringUtils.isNotEmpty(content)) {
+            config.content = content;
+        }
+        if (StringUtils.isNotEmpty(mentionedId)) {
             config.mentionedId = mentionedId;
         }
-        if(StringUtils.isNotEmpty(mentionedMobile)){
+        if (StringUtils.isNotEmpty(mentionedMobile)) {
             config.mentionedMobile = mentionedMobile;
         }
         config.failNotify = failNotify;
         //使用环境变量
-        if(config.webhookUrl.contains("$")){
+        if (config.webhookUrl.contains("$")) {
             String val = NotificationUtil.replaceMultipleEnvValue(config.webhookUrl, envVars);
             config.webhookUrl = val;
         }
-        if(config.mentionedId.contains("$")){
+        if (config.mentionedId.contains("$")) {
             String val = NotificationUtil.replaceMultipleEnvValue(config.mentionedId, envVars);
             config.mentionedId = val;
         }
-        if(config.mentionedMobile.contains("$")){
+        if (config.mentionedMobile.contains("$")) {
             String val = NotificationUtil.replaceMultipleEnvValue(config.mentionedMobile, envVars);
             config.mentionedMobile = val;
         }
         return config;
     }
 
-    /** 下面为GetSet方法，当前Job保存时进行绑定 **/
+    /**
+     * 下面为GetSet方法，当前Job保存时进行绑定
+     **/
 
     @DataBoundSetter
     public void setWebhookUrl(String webhookUrl) {
         this.webhookUrl = webhookUrl;
+    }
+
+    @DataBoundSetter
+    public void setContent(String content) {
+        this.content = content;
     }
 
     @DataBoundSetter
